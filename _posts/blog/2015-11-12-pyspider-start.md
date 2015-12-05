@@ -5,7 +5,7 @@ description: 开始学习一个爬虫框架。
 category: blog
 ---
 
-最初开始关注这个项目是因为偶然在[stackoverflow][1]上看到了作者对这个项目的亮点的介绍：
+最初开始关注这个项目是因为偶然在stackoverflow上看到了作者对这个项目的亮点的介绍：
 > pyspider and Scrapy have the same purpose, web scraping, but a different view about doing that.
 
 > spider should never stop till WWW dead. (information is changing, data is updating in websites, spider should have the ability and responsibility to scrape latest data. That's why pyspider has URL database, powerful scheduler, @every, age, etc..)
