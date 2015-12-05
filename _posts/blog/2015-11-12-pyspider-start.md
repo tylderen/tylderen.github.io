@@ -9,19 +9,28 @@ category: blog
 > pyspider and Scrapy have the same purpose, web scraping, but a different view about doing that.
 
 > spider should never stop till WWW dead. (information is changing, data is updating in websites, spider should have the ability and responsibility to scrape latest data. That's why pyspider has URL database, powerful scheduler, @every, age, etc..)
-pyspider is a service more than a framework. (Components are running in isolated process, lite - all version is running as service too, you needn't have a Python environment but a browser, everything about fetch or schedule is controlled by script via API not startup parameters or global configs, resources/projects is managed by pyspider, etc...)
-pyspider is a spider system. (Any components can been replaced, even developed in C/C++/Java or any language, for better performance or larger capacity)
+
+> pyspider is a service more than a framework. (Components are running in isolated process, lite - all version is running as service too, you needn't have a Python environment but a browser, everything about fetch or schedule is controlled by script via API not startup parameters or global configs, resources/projects is managed by pyspider, etc...)
+
+> pyspider is a spider system. (Any components can been replaced, even developed in C/C++/Java or any language, for better performance or larger capacity)
 
 > and
 
 > on_start vs start_url
-token bucket traffic control vs download_delay
-return json vs class Item
-message queue vs Pipeline
-built-in url database vs set
-Persistence vs In-memory
-PyQuery + any third package you like vs built-in CSS/Xpath support
-In fact, I have not referred much from Scrapy. pyspider is really different from Scrapy.
+
+> token bucket traffic control vs download_delay
+
+> return json vs class Item
+
+> message queue vs Pipeline
+
+> built-in url database vs set
+
+> Persistence vs In-memory
+
+> PyQuery + any third package you like vs built-in CSS/Xpath support
+
+> In fact, I have not referred much from Scrapy. pyspider is really different from Scrapy.
 
 > But, why not try it yourself? pyspider is also fast, has easy-to-use API and you can try it without install. 
 
