@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: at home 
 ---
 
 <div class="index-content opinion">
