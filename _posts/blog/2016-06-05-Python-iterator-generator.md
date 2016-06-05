@@ -151,7 +151,7 @@ In [2]: for i in first_n(3):
 `dict.iteritems()` 相比 `dict.items()` 等等都是这方面的例子。
 
 
-Pytohn引入的 `yield` 生成器，内部使用了协程的实现，除了在这里作为可迭代器使用，在其他很多地方都会给我们带来性能上的巨大提升，以后的文章里面我们会陆续提到。
+Pytohn引入的 `yield` 生成器，内部使用了协程的实现，除了在这里可作为迭代器使用外，在其他很多地方都会给我们带来性能上的巨大提升，以后的文章里面我们会陆续提到。
 
 
 [tylderen]:    http://tylderen.github.io  "tylderen"
