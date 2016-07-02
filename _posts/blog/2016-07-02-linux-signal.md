@@ -49,4 +49,4 @@ category: blog
 这个暂时还没有遇到过，但是许多人都在讲多线程处理信号需要特别的注意，留坑，会专门找个时间学习一下。
 
 ###代码
-[ 使用`Python`实现的`signal`小例子 ] (https://github.com/tylderen/linux_focus/tree/master/signal)
+[ 使用`Python`实现的`signal`小例子 ](https://github.com/tylderen/linux_focus/tree/master/signal)
