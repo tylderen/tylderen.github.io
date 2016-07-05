@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  线程池（ThreadPool）
-description: 从 Python `ThreadPoolExecutor`源码剖析看线程池的使用和实现
+description: 从 Python ThreadPoolExecutor 源码剖析看线程池的使用和实现
 category: blog
 ---
 
