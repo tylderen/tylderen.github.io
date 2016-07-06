@@ -59,5 +59,12 @@ In [3]: with ThreadPoolExecutor(max_workers=1) as executor:
 
 工作线程：即为线程池里的线程，刚开始，每向线程池提交一个任务就会产生一个工作线程，直到工作线程的数量达到指定的线程池大小`max_workers`为止。以后再向线程池添加任务会继续放到任务队列里面，但不会开新的线程了。
 
-线程池管理器：应该有这些功能，创建线程池，销毁线程池，添加新任务等；但是在代码里面这些个功能是分布在不同函数里面的，创建线程池是在 [`def _adjust_thread_count(self)`](https://hg.python.org/cpython/file/default/Lib/concurrent/futures/thread.py#l117)这里不断的创建新的线程并放到 `_threads_queues` 里面；销毁线程池是在 [`def shutdown(self, wait=True)`](https://hg.python.org/cpython/file/default/Lib/concurrent/futures/thread.py#l133)这个函数里面；添加新任务就是我们最常使用的 [`def submit(self, fn, *args, **kwargs)`](https://hg.python.org/cpython/file/default/Lib/concurrent/futures/thread.py#l104) 函数。
+线程池管理器：应该有这些功能，创建线程池，销毁线程池，添加新任务等；但是在代码里面这些个功能是分布在不同函数里面的.
+
+创建线程池是在 [`def _adjust_thread_count(self)`](https://hg.python.org/cpython/file/default/Lib/concurrent/futures/thread.py#l117)这里不断的创建新的线程并放到 `_threads_queues` 里面；
+
+销毁线程池是在 [`def shutdown(self, wait=True)`](https://hg.python.org/cpython/file/default/Lib/concurrent/futures/thread.py#l133)这个函数里面；
+
+添加新任务就是我们最常使用的 [`def submit(self, fn, *args, **kwargs)`](https://hg.python.org/cpython/file/default/Lib/concurrent/futures/thread.py#l104) 函数。
+
 任务接口： [`class _WorkItem(object)`](https://hg.python.org/cpython/file/default/Lib/concurrent/futures/thread.py#l43) 提供了对任务函数的包装；[`def _worker(executor_reference, work_queue)`](https://hg.python.org/cpython/file/default/Lib/concurrent/futures/thread.py#l61) 给工作线程提供了执行入口。
