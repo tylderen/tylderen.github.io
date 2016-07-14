@@ -49,7 +49,7 @@ int epoll_wait(int epfd, struct epoll_event *events,int maxevents, int timeout);
 
 一些基于`Reactor`模式的软件或库不光能处理`I/O`事件，还在事件循环里加入了对定时事件的处理。
 
-定时事件的处理，很巧妙的利用了`epoll _wait`的一个参数`timeout`，每次调用`epoll_wait`时，
+定时事件的处理，很巧妙的利用了`epoll_wait`的一个参数`timeout`，每次调用`epoll_wait`时，
 其参数`timeout`就等于下次定时事件的到期时间，`epoll_wait`如果在`timeout`内有`I/O`事件
 返回，就继续处理这些事件，如果等到`timeout`没有`I/O`事件，那么也会因为`timeout`到期而
 返回，此时也表示有定期事件到期了，就会在下一次调用`epoll_wait`之前处理到期事件。
