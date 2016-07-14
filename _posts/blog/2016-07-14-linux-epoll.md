@@ -1,14 +1,13 @@
 ---
 layout: post
-title:  Linux epoll 高并发的核心
-description: 1, Linux epoll以及基于epoll的Reactor模式
+title:  Linux系列： epoll  --高并发的核心
+description:  Linux epoll以及基于epoll的Reactor模式
 category: blog
 ---
 众所周知， `epoll`是`Linux`从`Kernel 2.6`开始引入的处理`I/O`多路复用的新方法。其相比以前的`select`，`poll`，
 在处理大量开放连接的性能上有了非常大的提高。
 
 我甚至觉得只要谈到和网络相关的高并发，在`Linux`下各种软件的底层都会优先使用`epoll`。列举几个我知道的：
-
 
 >鼎鼎大名的 `nginx`，无需介绍；
 
@@ -19,7 +18,9 @@ category: blog
 >使用`Python`开发的全栈式`Web`框架和异步网络库， `tornado`；
 
 在Linux下，它们在处理网络I/O事件时都无一例外的使用了epoll。那么epoll到底是什么？它的高并发
-能力又是如何实现的？推荐一篇文章，讲的比较详细：
+能力又是如何实现的？
+
+推荐一篇文章，讲的比较详细：
 [`linux`下`epoll`如何实现高效处理百万句柄的](http://blog.csdn.net/russell_tao/article/details/7160071)
 
 我们知道， `epoll`相关的系统调用很简洁，只有三个：
@@ -47,11 +48,12 @@ int epoll_wait(int epfd, struct epoll_event *events,int maxevents, int timeout);
 的结果，并用对应的`epoll_ctl`注册的回调函数进行处理，最后回到循环的开始, 周而复始。
 
 一些基于`Reactor`模式的软件或库不光能处理`I/O`事件，还在事件循环里加入了对定时事件的处理。
+
 定时事件的处理，很巧妙的利用了`epll _wait`的一个参数`timeout`，每次调用`epoll_wait`时，
 其参数`timeout`就等于下次定时事件的到期时间，`epoll_wait`如果在`timeout`内有`I/O`事件
 返回，就继续处理这些事件，如果等到`timeout`没有`I/O`事件，那么也会因为`timeout`到期而
-返回，此时也表示有定期事件到期了，就会在下一次调用`epoll_wait`之前处理到期事件。这样，
-我们就有能力去执行一些在将来某个时间点发生的事件，或者是一些需要周期执行的事件。
+返回，此时也表示有定期事件到期了，就会在下一次调用`epoll_wait`之前处理到期事件。
 
+这样，我们就有能力去执行一些在将来某个时间点发生的事件，或者是一些需要周期执行的事件。
 
 下一篇会分析一下`tornado`的`ioloop`源码，看一下`tornado`对上面这个`Reactor`模式的实现。
