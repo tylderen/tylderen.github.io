@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Linux系列： epoll  --高并发的核心
+title:  Linux系列： epoll  高并发的核心
 description:  Linux epoll以及基于epoll的Reactor模式
 category: blog
 ---
