@@ -17,7 +17,7 @@ category: blog
 
 >使用`Python`开发的全栈式`Web`框架和异步网络库， `tornado`；
 
-在Linux下，它们在处理网络I/O事件时都无一例外的使用了epoll。那么epoll到底是什么？它的高并发
+在`Linux`下，它们在处理网络`I/O`事件时都无一例外的使用了`epoll`。那么`epoll`到底是什么？它的高并发
 能力又是如何实现的？
 
 推荐一篇文章，讲的比较详细：
@@ -49,7 +49,7 @@ int epoll_wait(int epfd, struct epoll_event *events,int maxevents, int timeout);
 
 一些基于`Reactor`模式的软件或库不光能处理`I/O`事件，还在事件循环里加入了对定时事件的处理。
 
-定时事件的处理，很巧妙的利用了`epll _wait`的一个参数`timeout`，每次调用`epoll_wait`时，
+定时事件的处理，很巧妙的利用了`epoll _wait`的一个参数`timeout`，每次调用`epoll_wait`时，
 其参数`timeout`就等于下次定时事件的到期时间，`epoll_wait`如果在`timeout`内有`I/O`事件
 返回，就继续处理这些事件，如果等到`timeout`没有`I/O`事件，那么也会因为`timeout`到期而
 返回，此时也表示有定期事件到期了，就会在下一次调用`epoll_wait`之前处理到期事件。
