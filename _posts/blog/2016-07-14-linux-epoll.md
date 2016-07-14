@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Linux系列： epoll  高并发的核心
-description:  Linux epoll以及基于epoll的Reactor模式
+description:  Linux epoll 以及 基于epoll的Reactor模式
 category: blog
 ---
 众所周知， `epoll`是`Linux`从`Kernel 2.6`开始引入的处理`I/O`多路复用的新方法。其相比以前的`select`，`poll`，
