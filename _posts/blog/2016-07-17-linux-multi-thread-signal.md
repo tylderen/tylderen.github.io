@@ -17,7 +17,8 @@ category: blog
 >Python signal handlers are always executed in the main Python thread, even if the signal was received in another thread. This means that signals can’t be used as a means of inter-thread communication. You can use the synchronization primitives from the threading module instead.
 Besides, only the main thread is allowed to set a new signal handler.
 
-这段话是说，无论信号由哪个线程获得，信号处理函数总是在主线程中执行。信号不是用于线程之间通信的手段（信号属于进程间通信的一种）。线程间的通信可以参考`threading`模块的`同步`。另外，只有主线程被允许来设置信号处理函数。
+这段话是说，无论信号由哪个线程获得，信号处理函数总是在主线程中执行。信号不是用于线程之间通信的手段（信号属于进程间通信的一种）。线程间的通信可以参考`threading`模块的`同步`。此外，只有主线程被允许来设置信号处理函数。
+
 来看几个例子,在例子前面，先把这几个例子里都不会变的子线程函数以及信号处理函数写下来：
 
 ```python
@@ -40,7 +41,7 @@ def work():
     current_thread = threading.current_thread()
     index = 0
     while not is_exit:
-        if (index < 10):
+        if (index < 4):
             logging.info('%s:  %d', current_thread, index)
             index += 1
         else:
