@@ -151,13 +151,11 @@ if __name__ == "__main__":
 ### 4，子线程为`deamon`线程，主线程立刻退出:
 根据我们很早之前的了解，只要主线程退出了，这时候进程也会全部退出。
 
-从上面可以看出来，处理信号靠的就是主线程，只要保证他活着，信号就能正确处理。
-
-
-而主线程等待其他子线程结束，我们使用的`sleep`方法并不是一个靠谱的方式，按正常理解，一个更优雅的办法会是`join`。
+## 从上面可以看出来，处理信号靠的就是主线程，只要保证他活着，信号就能正确处理。
 
 ### Thread `join()`
 
+主线程等待其他子线程结束，我们使用的`sleep`方法并不是一个靠谱的方式，按正常理解，一个更优雅的办法会是`join`。
 线程`join`机制能让一个线程`join`到另外一个线程中.比如一个子线程`join`回主线程,那么主线程就会等待子线程运行结束.从而达到线程间等待的同步机制。
 好，看起来只要把用`sleep`的地方换成`join`的方式就行了。
 
@@ -221,7 +219,6 @@ def _wait_for_tstate_lock(self, block=True, timeout=-1):
 也就是说，正常情况下，`join`会`wait`在一个锁上，等待子线程退出。子线程退出后，主线程获得锁才能够响应中断信号。而查阅`lock.acquire()`的文档：
 
 >[acquire(blocking=True, timeout=-1)](https://docs.python.org/3/library/threading.html#threading.Lock.acquire)
-
 >Acquire a lock, blocking or non-blocking.
 >Changed in version 3.2: The timeout parameter is new.
 >Changed in version 3.2: Lock acquires can now be interrupted by signals on POSIX.
