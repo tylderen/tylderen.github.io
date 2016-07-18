@@ -191,6 +191,7 @@ if __name__ == "__main__":
 我也翻了一下源码，发现：
 
 ```python
+
 def join(self, timeout=None):
    
     if timeout is None:
@@ -207,6 +208,7 @@ def _wait_for_tstate_lock(self, block=True, timeout=-1):
     elif lock.acquire(block, timeout):
         lock.release()
         self._stop()
+        
 ```
 
 从上面代码的倒数第三行可以看到，
