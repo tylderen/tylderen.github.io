@@ -59,6 +59,7 @@ def handler(signum, frame):
 ```
 
 ### 1，子线程为非`deamon`线程，主线程不立刻退出
+
 ```python
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, handler)
@@ -71,8 +72,10 @@ if __name__ == "__main__":
     # don't quit right now.
     time.sleep(500)
 ```
+
 运行一下：
-```python
+
+```
 2016-07-17 20:58:50,192 - INFO - <Thread(Thread-1, started 123145306509312)>:  0
 2016-07-17 20:58:50,192 - INFO - <Thread(Thread-2, started 123145310715904)>:  0
 2016-07-17 20:58:51,194 - INFO - <Thread(Thread-1, started 123145306509312)>:  1
@@ -85,6 +88,7 @@ if __name__ == "__main__":
 可以看到 按下 `Ctrl+C`后，程序马上在主线程里处理了该信号。
 
 ### 2，子线程为非`deamon`线程，主线程立刻退出:
+
 ```
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, handler)
@@ -98,7 +102,8 @@ if __name__ == "__main__":
     # time.sleep(500)
 ```
 运行一下：
-```python
+
+```
 2016-07-17 21:05:37,691 - INFO - <Thread(Thread-1, started 123145306509312)>:  0
 2016-07-17 21:05:37,692 - INFO - <Thread(Thread-2, started 123145310715904)>:  0
 2016-07-17 21:05:38,697 - INFO - <Thread(Thread-1, started 123145306509312)>:  1
@@ -130,8 +135,10 @@ if __name__ == "__main__":
     # don't quit right now.
     time.sleep(500)
 ```
+
 这种情况下，
-```python
+
+```
 2016-07-17 21:27:15,228 - INFO - <Thread(Thread-1, started daemon 123145306509312)>:  0
 2016-07-17 21:27:15,229 - INFO - <Thread(Thread-2, started daemon 123145310715904)>:  0
 2016-07-17 21:27:16,231 - INFO - <Thread(Thread-1, started daemon 123145306509312)>:  1
@@ -166,8 +173,10 @@ if __name__ == "__main__":
         t.start()
         t.join()
 ```
+
 运行，得到：
-```python
+
+```
 2016-07-17 21:38:54,545 - INFO - <Thread(Thread-1, started 123145306509312)>:  0
 2016-07-17 21:38:55,550 - INFO - <Thread(Thread-1, started 123145306509312)>:  1
 ^C2016-07-17 21:38:56,553 - INFO - <Thread(Thread-1, started 123145306509312)>:  2
@@ -176,9 +185,11 @@ if __name__ == "__main__":
 2016-07-17 21:38:58,561 - INFO - <_MainThread(MainThread, started 140735284137984)> receive a signal 2, is_exit = 1
 2016-07-17 21:38:58,561 - INFO - <Thread(Thread-2, started 123145306509312)> complete.
 ```
+
 分析一下日志，按下 `Ctrl+C`后，程序没有立刻处理该信号。主线程看样子是阻塞在了`join()`，等到`join()`返回后，才立刻处理该信号，这样也导致了下一次`for`循环生成的第二个子线程由于`is_exit == True`而立刻退出。
 所以，看来使用了`join`带来了新的问题，信号并不能中断`join()`调用，看来`join`在这里并不能用。
 我也翻了一下源码，发现：
+
 ```python
 def join(self, timeout=None):
    
