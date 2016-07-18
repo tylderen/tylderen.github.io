@@ -219,8 +219,11 @@ def _wait_for_tstate_lock(self, block=True, timeout=-1):
 也就是说，正常情况下，`join`会`wait`在一个锁上，等待子线程退出。子线程退出后，主线程获得锁才能够响应中断信号。而查阅`lock.acquire()`的文档：
 
 >[acquire(blocking=True, timeout=-1)](https://docs.python.org/3/library/threading.html#threading.Lock.acquire)
+
 >Acquire a lock, blocking or non-blocking.
+
 >Changed in version 3.2: The timeout parameter is new.
+
 >Changed in version 3.2: Lock acquires can now be interrupted by signals on POSIX.
 
 注意最后一句，自从`Python 3.2`之后，`acquire()`才会处理信号，也就是说，在`Python 3.2`之前，对可忽略信号都是直接`ignore`的！所以，其实`join`在`Python 3.2`之后，是可以正常使用的！不信可以试试！
