@@ -1,9 +1,10 @@
 ---
 layout: post
-title:  Tornado 核心源码剖析
-description:  `tornado.ioloop` — Main event loop
+title: Tornado 核心源码剖析
+description: `tornado.ioloop` Main event loop
 category: blog
 ---
+
 [`ioloop.py`](https://github.com/tornadoweb/tornado/blob/master/tornado/ioloop.py) 共五个类，简单明了：
 
 ```python
