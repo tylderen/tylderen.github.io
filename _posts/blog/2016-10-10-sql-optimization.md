@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 数据库性能优化(-)
+title: 数据库性能优化(一)
 description: 合适的索引，合理的表结构是基础
 category: blog
 ---
