@@ -65,7 +65,8 @@ else:
 > This is because CPython must acquire a lock before calling getaddrinfo(). A deadlock will occur if the MongoClient‘s parent process forks (on the main thread) while its monitor thread is in the getaddrinfo() system call.
 PyMongo will issue a warning if there is a chance of this deadlock occurring.
 
-又看了一下(`redis-py`)[https://github.com/andymccurdy/redis-py]，并不存在这个问题，因为他在使用连接的时候，会检查当前的进程ID，[def get_connection](https://github.com/andymccurdy/redis-py/blob/a87ae0ddb5b591f15527312229a7c92284012a5b/redis/connection.py#L1047):
+又看了一下[`redis-py`](https://github.com/andymccurdy/redis-py)，并不存在这个问题，因为他在使用连接的时候，会检查当前的进程ID，
+[`def get_connection()`](https://github.com/andymccurdy/redis-py/blob/a87ae0ddb5b591f15527312229a7c92284012a5b/redis/connection.py#L1047):
 
 ```
 def get_connection(self, command_name, *keys, **options):
