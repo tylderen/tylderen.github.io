@@ -1,7 +1,7 @@
 ---
 layout: post
-title: PyMongo 多进程下的正确使用
-description: fork 多进程
+title: 多进程使用fork 需要注意的问题 
+description: 从 PyMongo 多进程下的使用谈起
 category: blog
 ---
 
@@ -27,7 +27,9 @@ category: blog
 >* 子进程不会继承父进程的文件锁；
 >* 对子进程设置的Pending状态的信号会被清除掉；
 
-最有可能产生意外结果的是，通过 `fork()`调用后，被打开的文件与父进程和子进程存在着密切的联系。这是因为子进程与父进程公用这些文件的文件指针，文件指针由系统保存，而程序中没有保存它的值，从而当子进程移动文件指时也等于移动了父进程的文件指针。
+### 打开的文件会被父子进程共用
+
+通过 `fork()`调用后，被打开的文件与父进程和子进程存在着密切的联系。这是因为子进程与父进程公用这些文件的文件指针，文件指针由系统保存，而程序中没有保存它的值，从而当子进程移动文件指时也等于移动了父进程的文件指针。
 看一个例子：
 
 ```
@@ -57,13 +59,16 @@ else:
 
 ### Fork 正确的使用方式
 
-`fork`之后，在子进程里面应该立马关闭来自父进程的全部的文件相关的对象，然后重新打开需要的文件。
+`fork`并不会开始一个全新的干净的新进程。管道，文件，socket等在子进程都会复制完全一样的一份。
+比较安全的做法是在`fork`之后，在子进程里面应该立马关闭来自父进程的全部的文件相关的对象，然后重新打开需要的文件。
 
-可以看出来，`fork`并不会很干净的开始一个新进程。
+### PyMongo 与 redis-py 在 fork 时的不同处理
+
 回到刚开始那里，我们看一下`PyMongo`文档给出的原因：
 
 > This is because CPython must acquire a lock before calling getaddrinfo(). A deadlock will occur if the MongoClient‘s parent process forks (on the main thread) while its monitor thread is in the getaddrinfo() system call.
 PyMongo will issue a warning if there is a chance of this deadlock occurring.
+
 
 又看了一下[`redis-py`](https://github.com/andymccurdy/redis-py)，并不存在这个问题，因为他在使用连接的时候，会检查当前的进程ID，
 [`def get_connection()`](https://github.com/andymccurdy/redis-py/blob/a87ae0ddb5b591f15527312229a7c92284012a5b/redis/connection.py#L1047):
@@ -88,4 +93,5 @@ def get_connection(self, command_name, *keys, **options):
                 self.disconnect()
                 self.reset()
 ```
-所以 `redis-py`既是 `thread safe` 同样也是 `fork safe`。`PyMongo`并不是`fork safe`的。
+
+看来`redis-py`， `PyMongo`都是 `thread safe`的，但是只有`redis-py`是`fork safe`的。
