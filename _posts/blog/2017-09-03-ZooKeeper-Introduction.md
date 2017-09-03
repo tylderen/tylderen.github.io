@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 分布式系统的管理员 ZooKeeper (一)： 介绍
+title: 分布式系统的管理员 ZooKeeper (一) 介绍
 description: ZooKeeper在分布式系统中的应用
 category: blog
 ---
